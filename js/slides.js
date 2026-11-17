@@ -372,34 +372,32 @@ window.SLIDES = [
     key: 'ab', section: 5, title: 'A와 B, 어느 질문이 더 좋은 답을 받을까?',
     html: `<div class="ab">
         <div class="abox a"><span class="ab-tag">A</span><p class="copy">스마트폰 논문 요약해 줘.</p></div>
-        <div class="abox b"><span class="ab-tag">B</span><p class="copy">나는 중학교 3학년이고 소논문 주제를 찾고 있어. 내가 올린 두 논문만 근거로 연구 대상, 조사 방법, 핵심 결과를 표로 비교해 줘. 각 칸에 출처 번호를 달고, 어려운 용어는 중학생이 이해할 수 있게 한 줄로 풀어 줘.</p></div>
+        <div class="abox b"><span class="ab-tag">B</span><p class="copy">너는 중학생에게 논문을 쉽게 풀어 주는 과학 선생님이야. 나는 소논문 주제를 찾고 있는 중학교 3학년이야. 내가 올린 두 논문만 근거로 연구 대상, 조사 방법, 핵심 결과를 비교해 줘. 답하기 전에 내가 무엇이 궁금한지 알 수 있도록 나에게 먼저 질문 3개를 해 줘.</p></div>
       </div>
       <p class="hint">Gemini 노트북에 A와 B를 각각 넣어 보고 답을 비교해요. (3분)</p>`,
     poll: { label: '어느 답이 내 공부에 더 쓸모 있었나요?', options: ['A', 'B', '비슷했다'] },
     chatPrompt: 'B의 어떤 부분이 차이를 만들었을까요?',
   },
   {
-    key: 'formula', section: 5, title: '좋은 프롬프트의 5가지 재료',
-    html: `<div class="rules">
-        <div class="rule"><b>1</b><p><strong>나와 상황</strong> — 나는 누구이고 왜 묻는지 ("중3, 소논문 주제 찾는 중")</p></div>
-        <div class="rule"><b>2</b><p><strong>할 일</strong> — 동사 하나로 분명하게 ("비교해 줘", "질문 5개 만들어 줘")</p></div>
-        <div class="rule"><b>3</b><p><strong>근거 범위</strong> — 무엇을 바탕으로 ("올린 두 논문만", "출처 번호 달아서")</p></div>
-        <div class="rule"><b>4</b><p><strong>형식</strong> — 어떤 모양으로 ("표로", "3줄로", "단계별로")</p></div>
-        <div class="rule"><b>5</b><p><strong>수준·조건</strong> — 누구 눈높이로, 무엇은 빼고 ("중학생 수준", "추측은 빼고")</p></div>
+    key: 'formula', section: 5, title: '좋은 프롬프트 = 화자 · 청자 · 리소스 + 먼저 묻게 하기',
+    html: `<div class="pf3">
+        <div class="pf"><span class="pf-k">화자</span><h4>AI는 누구로서 말할까?</h4><p class="copy">너는 중학생에게 논문을 쉽게 풀어 주는 과학 선생님이야.</p></div>
+        <div class="pf"><span class="pf-k">청자</span><h4>누가 듣는 답일까?</h4><p class="copy">나는 소논문 주제를 찾는 중학교 3학년이야.</p></div>
+        <div class="pf"><span class="pf-k">리소스</span><h4>무엇을 근거로?</h4><p class="copy">내가 올린 두 논문만 근거로, 출처 번호를 달아서.</p></div>
       </div>
-      <div class="callout small"><b>시간을 아끼는 두 가지 습관</b> ① 한 번에 끝내려 하지 말고 이어서 묻기: "2번을 더 쉽게", "반대 의견도 있어?" ② 잘 통한 프롬프트는 메모장에 저장해 두고 주제만 바꿔 다시 쓰기</div>`,
-    chatPrompt: '5가지 중 평소 가장 자주 빠뜨리던 재료는?',
+      <div class="aba"><span class="pf-k plus">+ Ask-before-answer</span><div><h4>바로 답하지 말고, 나에게 먼저 묻게 하기</h4><p class="copy">답하기 전에 내 상황을 알 수 있도록 나에게 질문 3개를 먼저 해 줘.</p><p class="sub">AI가 내 관심과 수준을 먼저 확인하니, 여러 번 고쳐 묻지 않아도 맞춤형 답이 나와요. 시간이 절약돼요.</p></div></div>`,
+    chatPrompt: '내 주제로 화자·청자·리소스를 한 줄씩 써 보세요',
   },
   {
     key: 'my-prompt', section: 5, title: '미션: 내 프롬프트 만들기',
     html: `<div class="grid-2 make">
         <div>
           <ol class="howto">
-            <li>내 관심 주제나 오늘 논문으로 <b>5가지 재료</b>를 넣은 프롬프트를 써요.</li>
-            <li>Gemini 노트북(또는 Gemini)에 넣어 결과를 확인해요.</li>
+            <li><b>화자 · 청자 · 리소스</b>를 넣고, 끝에 <b>"먼저 질문해 줘"</b>를 붙여 프롬프트를 써요.</li>
+            <li>Gemini 노트북(또는 Gemini)의 질문에 답한 뒤 결과를 확인해요.</li>
             <li>이어서 물을 <b>후속 질문</b> 하나를 정해요.</li>
           </ol>
-          <div class="label-guide"><b>예시</b> "나는 중3이고 숏폼과 집중력에 관심이 있어. 올린 논문만 근거로, 내가 중학생 대상으로 설문 탐구를 한다면 물어볼 만한 질문 5개를 표로 만들어 줘. 각 질문이 어느 연구 결과에서 나왔는지 출처 번호를 달아 줘."</div>
+          <div class="label-guide"><b>예시</b> "너는 청소년 연구를 도와주는 탐구 멘토야(화자). 나는 숏폼과 집중력에 관심 있는 중3이야(청자). 내가 올린 논문만 근거로(리소스) 중학생 대상 설문 탐구 아이디어를 제안해 줘. 답하기 전에 나에게 질문 3개를 먼저 해 줘(Ask-before-answer)."</div>
         </div>
         <div class="submit-host"></div>
       </div>`,
@@ -450,7 +448,7 @@ window.SLIDES = [
         <div class="rule"><b>2</b><p>AI의 답은 출발점, <strong>원문이 증거</strong>. 확인하고, 출처를 밝혀요.</p></div>
         <div class="rule"><b>3</b><p><strong>좋은 질문을 하는 사람</strong>이 AI도, 논문도 잘 써요.</p></div>
       </div>`,
-    poll: { label: '오늘 배운 것 중 가장 쓸모 있을 것은?', options: ['AI와 공부하는 규칙', '논문 찾기·검색어', '논문 읽는 순서·참고문헌', 'Gemini 노트북', '프롬프트 5가지 재료'] },
+    poll: { label: '오늘 배운 것 중 가장 쓸모 있을 것은?', options: ['AI와 공부하는 규칙', '논문 찾기·검색어', '논문 읽는 순서·참고문헌', 'Gemini 노트북', '프롬프트 (화자·청자·리소스)'] },
     chatPrompt: '오늘 소감 한 줄',
   },
 ];

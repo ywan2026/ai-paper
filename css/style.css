@@ -508,3 +508,12 @@ table.terms { width: 100%; border-collapse: collapse; font-size: 14px; min-width
 .abox.b .ab-tag { background: var(--blue); }
 .abox .copy { font-size: 15px; background: var(--surface); }
 @media (max-width: 1100px) { .ab, .flow.two .row { grid-template-columns: 1fr; } .flow .arrow { transform: rotate(0); } }
+.pf3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.pf { padding: 18px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--sep); }
+.pf h4, .aba h4 { margin: 10px 0 4px; font-size: 18px; }
+.pf-k { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--blue); color: #fff; font-weight: 700; font-size: 14px; }
+.pf-k.plus { background: var(--orange); flex: none; }
+.aba { display: flex; gap: 16px; align-items: flex-start; margin-top: 16px; padding: 18px; border-radius: 14px; background: var(--orange-soft); }
+.aba h4 { margin-top: 2px; }
+.aba .sub { margin: 8px 0 0; }
+@media (max-width: 1000px) { .pf3 { grid-template-columns: 1fr; } .aba { flex-direction: column; } }
