@@ -517,3 +517,62 @@ table.terms { width: 100%; border-collapse: collapse; font-size: 14px; min-width
 .aba h4 { margin-top: 2px; }
 .aba .sub { margin: 8px 0 0; }
 @media (max-width: 1000px) { .pf3 { grid-template-columns: 1fr; } .aba { flex-direction: column; } }
+
+/* ===== 수업 타이머 (모래시계) ===== */
+.ctimer { position: fixed; z-index: 40; width: 264px; border-radius: 18px; background: rgba(255,255,255,.92);
+  backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: 0 0 0 1px var(--sep), 0 14px 36px rgba(0,0,0,.18); overflow: hidden; user-select: none; }
+.ctimer[hidden] { display: none; }
+.ctimer.dragging { box-shadow: 0 0 0 2px var(--blue), 0 18px 44px rgba(0,0,0,.24); }
+.ct-head { display: flex; align-items: center; gap: 8px; padding: 8px 8px 6px 12px; cursor: grab; touch-action: none; font-size: 13px; color: var(--label-2); }
+.ctimer.dragging .ct-head { cursor: grabbing; }
+.ct-grip { color: var(--label-3); letter-spacing: -2px; font-weight: 700; }
+.ct-head b { flex: 1; }
+.ct-ico { border: 0; width: 28px; height: 28px; border-radius: 8px; background: var(--fill-2, rgba(120,120,128,.12)); font-size: 18px; line-height: 1; color: var(--label-2); }
+.ct-body { display: flex; align-items: center; gap: 12px; padding: 2px 16px 12px; }
+.ct-glass { width: 56px; height: 84px; flex: none; transition: transform .7s cubic-bezier(.5,-0.3,.4,1.3); }
+.ct-glass.flip { animation: ctFlip .8s cubic-bezier(.5,-0.2,.4,1.2); }
+@keyframes ctFlip { from { transform: rotate(-180deg); } to { transform: rotate(0); } }
+.ctimer.running .ct-glass { animation: ctSway 3s ease-in-out infinite; }
+.ctimer.running .ct-glass.flip { animation: ctFlip .8s cubic-bezier(.5,-0.2,.4,1.2), ctSway 3s ease-in-out .8s infinite; }
+@keyframes ctSway { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+.ctimer.done .ct-glass { animation: ctShake .5s ease-in-out 3; }
+@keyframes ctShake { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-14deg); } 75% { transform: rotate(14deg); } }
+.ct-cap { fill: #8e6b3d; }
+.ct-shell { fill: rgba(0,122,255,.06); stroke: #a7b4c6; stroke-width: 2; }
+.ct-sand { fill: #f2b544; }
+.ct-stream { stroke: #f2b544; stroke-width: 2; stroke-dasharray: 3 3; animation: ctFall .4s linear infinite; transition: opacity .2s; }
+@keyframes ctFall { to { stroke-dashoffset: -6; } }
+.ct-right { flex: 1; min-width: 0; }
+.ct-time { font-size: 40px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.ct-state { font-size: 13px; color: var(--label-3); margin: 2px 0 8px; }
+.ct-bar { height: 6px; border-radius: 3px; background: rgba(120,120,128,.16); overflow: hidden; }
+.ct-bar i { display: block; height: 100%; background: var(--blue); border-radius: 3px; }
+.ctimer.low .ct-time, .ctimer.done .ct-time { color: var(--red); }
+.ctimer.low .ct-bar i { background: var(--red); }
+.ctimer.done .ct-state { color: var(--red); font-weight: 700; }
+.ct-ctrl { padding: 0 12px 12px; display: grid; gap: 6px; }
+.ct-presets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.ct-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ct-btn { border: 0; height: 34px; border-radius: 10px; background: var(--blue-soft, rgba(0,122,255,.12)); color: var(--blue); font-weight: 700; font-size: 14px; }
+.ct-btn:hover:not(:disabled) { filter: brightness(.96); }
+.ct-btn:disabled { opacity: .4; }
+.ct-btn.danger { background: rgba(255,59,48,.12); color: var(--red); }
+.ct-pill { border: 0; border-radius: 999px; padding: 4px 10px; margin-right: 6px; background: rgba(255,149,0,.16); color: #b25e00; font-weight: 700; font-size: 13px; font-variant-numeric: tabular-nums; }
+.ct-pill[hidden] { display: none; }
+
+/* ===== 은은한 파란 그라데이션 배경 ===== */
+body { background: linear-gradient(180deg, #eef4ff 0%, #f3f6fc 45%, #eef2fa 100%) fixed; }
+.slide {
+  background:
+    radial-gradient(1100px 520px at 105% -10%, rgba(0,122,255,.14), transparent 60%),
+    radial-gradient(900px 480px at -10% 110%, rgba(90,160,255,.12), transparent 60%),
+    linear-gradient(165deg, #ffffff 0%, #f4f8ff 50%, #e9f2ff 100%);
+}
+.layout-cover, .layout-divider, .layout-question {
+  background:
+    radial-gradient(900px 500px at 100% 0%, rgba(0,122,255,.16), transparent 60%),
+    radial-gradient(700px 420px at 0% 100%, rgba(88,140,255,.13), transparent 60%),
+    linear-gradient(160deg, #ffffff 0%, #f1f7ff 55%, #e6f0ff 100%);
+}
+.chat { background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%); }

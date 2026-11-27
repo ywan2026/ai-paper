@@ -96,12 +96,14 @@
       if (!row || row.room_id && row.room_id !== ROOM) return;
       const i = S.messages.findIndex((m) => m.id === row.id);
       if (i >= 0) S.messages[i] = row; else S.messages.push(row);
+      if (window.ClassTimer && ClassTimer.isTimerKey(row.slide_key)) { ClassTimer.sync(S.messages, type === 'INSERT' ? row : null); return; }
       renderChat();
     });
     api.on('resp', (type, row) => { if (row) { S.responses.set(rkey(row), row); renderLive(); } });
     api.on('part', (type, row) => { if (row) { S.participants.set(row.id, row); renderRoster(); } });
     api.on('presence', (list) => { S.presence = list; renderRoster(); });
 
+    if (window.ClassTimer) ClassTimer.init({ api, S, ROOM });
     await reload();
     S.rendered = -1;
     const meta = () => ({ id: S.me.id, name: S.me.name, role: S.teacher ? 'teacher' : 'student' });
@@ -136,6 +138,7 @@
       const [room, msgs, resps, parts] = await Promise.all([api.getRoom(), api.listMessages(), api.listResponses(), S.teacher ? api.listParticipants() : Promise.resolve([])]);
       const resetChanged = S.room.reset_at !== undefined && room.reset_at && room.reset_at !== S.room.reset_at;
       S.room = guardRoom(room); S.messages = msgs || [];
+      if (window.ClassTimer) ClassTimer.sync(S.messages);
       S.responses = new Map((resps || []).map((r) => [rkey(r), r]));
       S.participants = new Map((parts || []).map((p) => [p.id, p]));
       if (!quiet || resetChanged) S.rendered = -1;
@@ -505,7 +508,7 @@
       };
       const rows = [['구분', '슬라이드', '슬라이드 제목', '이름', '항목', '응답', '시간']];
       resps.filter((r) => r.item !== 'reveal').forEach((r) => { const s = SLIDES[idx[r.slide_key]]; rows.push(['응답', (idx[r.slide_key] ?? -1) + 1, s ? s.title : r.slide_key, r.name, itemName(s, r.item), fmt(s, r.item, r.value), r.updated_at]); });
-      msgs.forEach((m) => { const s = SLIDES[idx[m.slide_key]]; rows.push(['채팅' + (m.hidden ? '(숨김)' : ''), (idx[m.slide_key] ?? -1) + 1, s ? s.title : m.slide_key, m.name, m.image_url ? '이미지' : '', m.image_url ? (m.body === '(이미지)' ? '' : m.body + ' ') + m.image_url : m.body, m.created_at]); });
+      msgs.filter((m) => m.slide_key !== '__timer__').forEach((m) => { const s = SLIDES[idx[m.slide_key]]; rows.push(['채팅' + (m.hidden ? '(숨김)' : ''), (idx[m.slide_key] ?? -1) + 1, s ? s.title : m.slide_key, m.name, m.image_url ? '이미지' : '', m.image_url ? (m.body === '(이미지)' ? '' : m.body + ' ') + m.image_url : m.body, m.created_at]); });
       const body = rows.slice(1).sort((a, b) => (a[1] - b[1]) || String(a[6]).localeCompare(String(b[6])));
       parts.forEach((p) => body.push(['참여자', '', '', p.name, '접속', '', p.joined_at]));
       const csv = '﻿' + [rows[0], ...body].map((r) => r.map((c) => '"' + String(c ?? '').replace(/"/g, '""') + '"').join(',')).join('\r\n');
